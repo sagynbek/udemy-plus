@@ -1,4 +1,5 @@
-import { emitAddedNode, emitRemovedNode } from "inject/player/video-player";
+import { emitAddedVideoPlayer, emitRemovedVideoPlayer } from "inject/player/video-player";
+import { emitAddedCourseContent, emitRemovedCourseContent } from "inject/course-content/course-content";
 
 export const runMutationObserver = () => {
     // Select the node that will be observed for mutations
@@ -40,4 +41,14 @@ export const runMutationObserver = () => {
     // observer.disconnect();
 
     return observer;
+}
+
+
+function emitAddedNode(addedNode: HTMLElement, mutation: MutationRecord) {
+    emitAddedCourseContent(addedNode, mutation);
+    emitAddedVideoPlayer(addedNode, mutation);
+}
+function emitRemovedNode(removedNode: HTMLElement, mutation: MutationRecord) {
+    emitRemovedCourseContent(removedNode, mutation);
+    emitRemovedVideoPlayer(removedNode, mutation);
 }

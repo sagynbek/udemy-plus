@@ -18,7 +18,6 @@ export class VideoPictureInPicture {
   foundVideoPlayer(video: HTMLVideoElement) {
     this._video = video;
 
-    debugger
     this.setupPip();
   }
 

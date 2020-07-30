@@ -41,9 +41,7 @@ function removedCourseVideoPlayer(removedNode: HTMLElement, mutation: MutationRe
 }
 
 
-
-
 export {
-  emitAddedNode as emitAddedNode,
-  emitRemovedNode as emitRemovedNode
+  emitAddedNode as emitAddedVideoPlayer,
+  emitRemovedNode as emitRemovedVideoPlayer,
 }

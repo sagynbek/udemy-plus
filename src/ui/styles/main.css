@@ -1,7 +1,16 @@
-
-.up-pip-button span{
+.up-pip-button span {
   background-size: contain !important;
   display: inline-block;
   width: 18px;
   height: 18px;
+}
+
+
+.up-toggle-section-completed {
+  background: rgb(0, 119, 145);
+  color: transparent;
+  text-shadow: 0 0 0 white;
+  text-align: center;
+  padding: 10px 12px;
+  cursor: pointer;
 }
