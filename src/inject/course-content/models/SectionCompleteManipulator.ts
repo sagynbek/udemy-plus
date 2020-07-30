@@ -38,13 +38,13 @@ export class SectionCompleteManipulator {
   static onToggleCompleted(e: any) {
     const { lessons, allCompleted } = SectionCompleteManipulator.analyze(e.target.parentNode);
 
-    const newStatus = allCompleted ? false : true;
+    const newStatus = !allCompleted;
     lessons.forEach(input => {
       if (input.checked !== newStatus) {
         input.click();
       }
     });
-    const toggleText = SectionCompleteManipulator.getActionText(allCompleted);
+    const toggleText = SectionCompleteManipulator.getActionText(newStatus);
     e.target.innerText = toggleText;
   }
 
