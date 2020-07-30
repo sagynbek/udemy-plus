@@ -1,0 +1,18 @@
+# Build files
+#-----------------------------------
+build
+debug
+build.zip
+build-firefox
+debug-firefox
+build-firefox.xpi
+darkreader.js
+
+# Node.js modules
+#-----------------------------------
+node_modules
+
+# IDE and editor configs
+#-----------------------------------
+.idea
+.vscode
