@@ -1,0 +1,7 @@
+
+.up-pip-button span{
+  background-size: contain !important;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
