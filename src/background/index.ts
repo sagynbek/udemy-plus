@@ -1,48 +1,30 @@
-import {Extension} from './extension';
-import {getHelpURL, UNINSTALL_URL} from '../utils/links';
+(() => {
+  function styleThemeSwitch(theme) {
+    theme = theme || "dark";
 
-// Initialize extension
-const extension = new Extension();
-extension.start();
-
-chrome.runtime.onInstalled.addListener(({reason}) => {
-    if (reason === 'install') {
-        chrome.tabs.create({url: getHelpURL()});
+    if (theme === "dark") {
+      document.getElementById('enableDarkTheme').classList.add('active');
+      document.getElementById('disableDarkTheme').classList.remove('active');
     }
-});
+    else {
+      document.getElementById('enableDarkTheme').classList.remove('active');
+      document.getElementById('disableDarkTheme').classList.add('active');
+    }
+  }
 
-chrome.runtime.setUninstallURL(UNINSTALL_URL);
+  function toggleDarkTheme(enabled) {
+    const theme = enabled ? "dark" : "default"
+    chrome.storage.sync.set({ theme }, () => {
+      styleThemeSwitch(theme);
+    });
+  }
 
-declare const __WATCH__: boolean;
-declare const __PORT__: number;
-const WATCH = __WATCH__;
 
-if (WATCH) {
-    const PORT = __PORT__;
-    const listen = () => {
-        const socket = new WebSocket(`ws://localhost:${PORT}`);
-        const send = (message: any) => socket.send(JSON.stringify(message));
-        socket.onmessage = (e) => {
-            const message = JSON.parse(e.data);
-            if (message.type.startsWith('reload:')) {
-                send({type: 'reloading'});
-            }
-            switch (message.type) {
-                case 'reload:css': {
-                    chrome.runtime.sendMessage({type: 'css-update'});
-                    break;
-                }
-                case 'reload:ui': {
-                    chrome.runtime.sendMessage({type: 'ui-update'});
-                    break;
-                }
-                case 'reload:full': {
-                    chrome.runtime.reload();
-                    break;
-                }
-            }
-        };
-        socket.onclose = () => setTimeout(listen, 1000);
-    };
-    listen();
-}
+  chrome.storage.sync.get(['theme'], function (result) {
+    styleThemeSwitch(result.theme);
+  });
+
+  document.getElementById('enableDarkTheme').addEventListener('click', function () { toggleDarkTheme(true); });
+  document.getElementById('disableDarkTheme').addEventListener('click', function () { toggleDarkTheme(false); });
+
+})();

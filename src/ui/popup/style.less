@@ -1,210 +1,29 @@
-@import "../theme";
-@import "../shared";
-
-@popup-content-width: 15rem;
-@popup-content-height: 30rem;
-@popup-content-padding: 1rem;
-
-@import "./components/custom-settings-toggle/style";
-@import "./components/engine-switch/style";
-@import "./components/filter-settings/style";
-@import "./components/font-settings/style";
-@import "./components/header/style";
-@import "./components/loader/style";
-@import "./components/more-settings/style";
-@import "./components/news/style";
-@import "./components/site-list-settings/style";
-@import "./components/site-toggle/style";
 
 body {
-    align-items: stretch;
-    box-sizing: content-box;
-    display: flex;
-    flex-direction: column;
-    height: @popup-content-height;
-    margin: 0 auto;
-    padding: @popup-content-padding;
-    position: relative;
-    width: @popup-content-width;
-}
-
-.header {
-    flex: none;
-}
-
-.tab-panel {
-    flex: auto;
-    margin-top: @indent-large;
-}
-
-footer {
-    align-items: stretch;
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: @indent-large;
-
-    p {
-        margin: 0 0 @size-border 0;
-        text-align: center;
-        white-space: pre;
-    }
-}
-
-.footer-links {
-    align-items: stretch;
-    display: flex;
-    flex: none;
-    justify-content: center;
-    margin-bottom: @indent-small;
-
-    &__link {
-        color: @color-fore;
-        line-height: @size-text-normal-height;
-        text-align: center;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    > :not(:first-child) {
-        margin-left: @indent-small;
-    }
-}
-
-.footer-buttons {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
-    width: 100%;
-
-    > * {
-        flex: auto;
-    }
-
-    > :not(:first-child) {
-        margin-left: @indent-small;
-    }
-}
-
-.donate-link {
-    align-items: center;
-    background-color: @color-control-active;
-    color: @color-control-fore;
+    min-width: 300px;
+    min-height: 150px;
+    background-color: #29303b;
+    color: white
+  }
+  
+  body div{
+    margin-bottom: 1em
+  }
+  #title {
+    text-align: center;
+  }
+  .switch {
+    float: right;
+  }
+  .switch span{
     cursor: pointer;
-    display: inline-flex;
-    justify-content: center;
-    margin: 0;
-    position: relative;
-    text-decoration: none;
-    transition: all @time-fast;
-
-    &:hover {
-        box-shadow: 0 0 @indent-large @color-control-active;
-    }
-
-    &__text {
-        font-weight: bold;
-        line-height: @size-control-inner;
-        transform: skewX(-10deg);
-    }
-
-    &::after {
-        background-image: url(../assets/images/ladybug-32.svg);
-        background-size: contain;
-        content: "";
-        display: inline-block;
-        height: @size-control-inner / 2;
-        left: 0;
-        position: absolute;
-        top: -@size-border - @size-control-inner / 2;
-        width: @size-control-inner;
-    }
-
-    &:hover::after {
-        filter: drop-shadow(0 0 @size-border @color-heading);
-    }
-}
-
-.dev-tools-button {
-    overflow: visible;
-    position: relative;
-
-    &--has-custom-fixes {
-        &::after {
-            background-color: @color-heading;
-            border-radius: @size-text-small-height / 2;
-            color: @color-control-fore;
-            content: "!";
-            font-size: @size-text-small;
-            line-height: @size-text-small-height;
-            min-width: @size-text-small-height;
-            position: absolute;
-            right: -@size-text-small-height / 3;
-            top: -@size-text-small-height / 3;
-            z-index: 3;
-        }
-    }
-}
-
-.ext-disabled {
-    .site-toggle--disabled {
-        opacity: 1;
-    }
-
-    .header__site-toggle,
-    .tab-panel {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .tab-panel__tab--active {
-        pointer-events: none;
-    }
-}
-
-//
-// Make popup borders the same
-// across platforms and browser versions
-
-body {
-    border: 2px solid white;
-}
-
-.overlay {
-    height: calc(100% - 4px);
-    left: 2px;
-    top: 2px;
-    width: calc(100% - 4px);
-}
-
-.built-in-horizontal-borders {
-    body {
-        border-bottom: none;
-        border-top: none;
-    }
-
-    .overlay {
-        height: 100%;
-        top: 0;
-    }
-}
-
-.built-in-borders {
-    body {
-        border: none;
-    }
-
-    .overlay {
-        height: 100%;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-}
-
-@import "./body/style";
+    padding: 5px 10px;
+    border: 1px solid;
+  }
+  .switch span.active{
+    background-color: #007791;
+    color: white
+  }
+  .heading{
+    font-size: 1.25em;
+  }

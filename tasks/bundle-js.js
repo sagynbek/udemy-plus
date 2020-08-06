@@ -6,14 +6,14 @@ const rollupPluginNodeResolve = require('@rollup/plugin-node-resolve').default;
 const rollupPluginReplace = require('@rollup/plugin-replace');
 const rollupPluginTypescript = require('rollup-plugin-typescript2');
 const typescript = require('typescript');
-const {getDestDir} = require('./paths');
+const { getDestDir } = require('./paths');
 const reload = require('./reload');
-const {PORT} = reload;
-const {createTask} = require('./task');
+const { PORT } = reload;
+const { createTask } = require('./task');
 
-async function copyToFF({cwdPath, debug}) {
-    const destPath = `${getDestDir({debug})}/${cwdPath}`;
-    const ffDestPath = `${getDestDir({debug, firefox: true})}/${cwdPath}`;
+async function copyToFF({ cwdPath, debug }) {
+    const destPath = `${getDestDir({ debug })}/${cwdPath}`;
+    const ffDestPath = `${getDestDir({ debug, firefox: true })}/${cwdPath}`;
     await fs.copy(destPath, ffDestPath);
 }
 
@@ -38,58 +38,58 @@ function patchFirefoxJS(/** @type {string} */code) {
 
 /** @type {JSEntry[]} */
 const jsEntries = [
-    {
-        src: 'src/background/index.ts',
-        dest: 'background/index.js',
-        reloadType: reload.FULL,
-        async postBuild({debug}) {
-            const destPath = `${getDestDir({debug})}/${this.dest}`;
-            const ffDestPath = `${getDestDir({debug, firefox: true})}/${this.dest}`;
-            const code = await fs.readFile(destPath, 'utf8');
-            await fs.outputFile(ffDestPath, patchFirefoxJS(code));
-        },
-        watchFiles: null,
-    },
+    // {
+    //     src: 'src/background/index.ts',
+    //     dest: 'background/index.js',
+    //     reloadType: reload.FULL,
+    //     async postBuild({ debug }) {
+    //         const destPath = `${getDestDir({ debug })}/${this.dest}`;
+    //         const ffDestPath = `${getDestDir({ debug, firefox: true })}/${this.dest}`;
+    //         const code = await fs.readFile(destPath, 'utf8');
+    //         await fs.outputFile(ffDestPath, patchFirefoxJS(code));
+    //     },
+    //     watchFiles: null,
+    // },
     {
         src: 'src/inject/index.ts',
         dest: 'inject/index.js',
         reloadType: reload.FULL,
-        async postBuild({debug}) {
-            await copyToFF({cwdPath: this.dest, debug});
+        async postBuild({ debug }) {
+            await copyToFF({ cwdPath: this.dest, debug });
         },
         watchFiles: null,
     },
+    // {
+    //     src: 'src/ui/devtools/index.tsx',
+    //     dest: 'ui/devtools/index.js',
+    //     reloadType: reload.UI,
+    //     async postBuild({ debug }) {
+    //         await copyToFF({ cwdPath: this.dest, debug });
+    //     },
+    //     watchFiles: null,
+    // },
     {
-        src: 'src/ui/devtools/index.tsx',
-        dest: 'ui/devtools/index.js',
-        reloadType: reload.UI,
-        async postBuild({debug}) {
-            await copyToFF({cwdPath: this.dest, debug});
-        },
-        watchFiles: null,
-    },
-    {
-        src: 'src/ui/popup/index.tsx',
+        src: 'src/ui/popup/index.ts',
         dest: 'ui/popup/index.js',
         reloadType: reload.UI,
-        async postBuild({debug}) {
-            await copyToFF({cwdPath: this.dest, debug});
+        async postBuild({ debug }) {
+            await copyToFF({ cwdPath: this.dest, debug });
         },
         watchFiles: null,
     },
-    {
-        src: 'src/ui/stylesheet-editor/index.tsx',
-        dest: 'ui/stylesheet-editor/index.js',
-        reloadType: reload.UI,
-        async postBuild({debug}) {
-            await copyToFF({cwdPath: this.dest, debug});
-        },
-        watchFiles: null,
-    },
+    // {
+    //     src: 'src/ui/stylesheet-editor/index.tsx',
+    //     dest: 'ui/stylesheet-editor/index.js',
+    //     reloadType: reload.UI,
+    //     async postBuild({ debug }) {
+    //         await copyToFF({ cwdPath: this.dest, debug });
+    //     },
+    //     watchFiles: null,
+    // },
 ];
 
-async function bundleJS(/** @type {JSEntry} */entry, {debug, watch}) {
-    const {src, dest} = entry;
+async function bundleJS(/** @type {JSEntry} */entry, { debug, watch }) {
+    const { src, dest } = entry;
     const bundle = await rollup.rollup({
         input: src,
         plugins: [
@@ -116,12 +116,12 @@ async function bundleJS(/** @type {JSEntry} */entry, {debug, watch}) {
     });
     entry.watchFiles = bundle.watchFiles;
     await bundle.write({
-        file: `${getDestDir({debug})}/${dest}`,
+        file: `${getDestDir({ debug })}/${dest}`,
         strict: true,
         format: 'iife',
         sourcemap: debug ? 'inline' : false,
     });
-    await entry.postBuild({debug});
+    await entry.postBuild({ debug });
 }
 
 function getWatchFiles() {
@@ -137,8 +137,8 @@ let watchFiles;
 
 module.exports = createTask(
     'bundle-js',
-    async ({debug, watch}) => await Promise.all(
-        jsEntries.map((entry) => bundleJS(entry, {debug, watch}))
+    async ({ debug, watch }) => await Promise.all(
+        jsEntries.map((entry) => bundleJS(entry, { debug, watch }))
     ),
 ).addWatcher(
     () => {
@@ -152,7 +152,7 @@ module.exports = createTask(
             });
         });
         await Promise.all(
-            entries.map((e) => bundleJS(e, {debug: true, watch: true}))
+            entries.map((e) => bundleJS(e, { debug: true, watch: true }))
         );
 
         const newWatchFiles = getWatchFiles();

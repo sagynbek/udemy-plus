@@ -8,10 +8,10 @@ const { createTask } = require('./task');
 function getLessFiles({ debug }) {
     const dir = getDestDir({ debug });
     return {
-        'src/ui/devtools/style.less': `${dir}/ui/devtools/style.css`,
+        // 'src/ui/devtools/style.less': `${dir}/ui/devtools/style.css`,
         'src/ui/popup/style.less': `${dir}/ui/popup/style.css`,
-        'src/ui/stylesheet-editor/style.less': `${dir}/ui/stylesheet-editor/style.css`,
-        'src/ui/styles/main.css': `${dir}/ui/styles/main.css`,
+        // 'src/ui/stylesheet-editor/style.less': `${dir}/ui/stylesheet-editor/style.css`,
+        // 'src/ui/styles/main.css': `${dir}/ui/styles/main.css`,
     };
 }
 
