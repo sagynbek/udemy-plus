@@ -27,7 +27,7 @@
                 "inject/index.js"
             ],
             "css": [
-                "ui/styles/main.css"
+                "ui/page.css"
             ],
             "run_at": "document_start"
         }
