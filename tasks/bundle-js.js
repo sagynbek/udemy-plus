@@ -38,18 +38,18 @@ function patchFirefoxJS(/** @type {string} */code) {
 
 /** @type {JSEntry[]} */
 const jsEntries = [
-    // {
-    //     src: 'src/background/index.ts',
-    //     dest: 'background/index.js',
-    //     reloadType: reload.FULL,
-    //     async postBuild({ debug }) {
-    //         const destPath = `${getDestDir({ debug })}/${this.dest}`;
-    //         const ffDestPath = `${getDestDir({ debug, firefox: true })}/${this.dest}`;
-    //         const code = await fs.readFile(destPath, 'utf8');
-    //         await fs.outputFile(ffDestPath, patchFirefoxJS(code));
-    //     },
-    //     watchFiles: null,
-    // },
+    {
+        src: 'src/background/index.ts',
+        dest: 'background/index.js',
+        reloadType: reload.FULL,
+        async postBuild({ debug }) {
+            const destPath = `${getDestDir({ debug })}/${this.dest}`;
+            const ffDestPath = `${getDestDir({ debug, firefox: true })}/${this.dest}`;
+            const code = await fs.readFile(destPath, 'utf8');
+            await fs.outputFile(ffDestPath, patchFirefoxJS(code));
+        },
+        watchFiles: null,
+    },
     {
         src: 'src/inject/index.ts',
         dest: 'inject/index.js',

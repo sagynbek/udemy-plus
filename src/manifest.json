@@ -5,7 +5,7 @@
     "author": "Sagynbek Kenzhebaev",
     "description": "__MSG_extension_description__",
     "default_locale": "en",
-    "browser_action": {
+    "page_action": {
         "default_title": "Udemy Plus",
         "default_popup": "ui/popup/index.html"
     },
