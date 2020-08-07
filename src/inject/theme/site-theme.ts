@@ -1,7 +1,22 @@
+// import {
+//   enable as enableDarkMode,
+//   disable as disableDarkMode,
+//   auto as followSystemColorScheme,
+// } from 'darkreader';
+
+
 type TTheme = | "dark" | "default";
 
 // Helpers
 function applyTheme(theme: TTheme) {
+  // if (theme === "dark") {
+  //   enableDarkMode({});
+  //   followSystemColorScheme({});
+  // }
+  // else {
+  //   disableDarkMode();
+  //   followSystemColorScheme(false);
+  // }
   // const darkThemePath = chrome.runtime.getURL(`style/${theme}-theme.css`);
   // const darkThemeStyleEl = document.createElement("link");
   // darkThemeStyleEl.setAttribute('rel', 'stylesheet');

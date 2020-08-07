@@ -6,6 +6,7 @@ interface HTMLPipWindow extends HTMLVideoElement {
 
 export class VideoPictureInPicture {
   _video?: HTMLVideoElement;
+  _pipFixer?: PictureInPictureFixer;
   pipWindow?: HTMLPipWindow;
   retryTheatreModeTimeout: any;
   pipButton?: HTMLButtonElement;
@@ -14,9 +15,14 @@ export class VideoPictureInPicture {
     if (!this._video) { throw new Error("Video not found"); }
     return this._video;
   }
+  get pipFixer(): PictureInPictureFixer {
+    if (!this._pipFixer) { throw new Error("VideoFixer not found"); }
+    return this._pipFixer;
+  }
 
   foundVideoPlayer(video: HTMLVideoElement) {
     this._video = video;
+    this._pipFixer = new PictureInPictureFixer(video);
 
     this.setupPip();
   }
@@ -76,10 +82,8 @@ export class VideoPictureInPicture {
   togglePip = async () => {
     if (!this.pipButton) { return; }
 
-    // console.log('Toggling Picture-in-Picture...');
     this.pipButton.disabled = true;
     try {
-
       if (this.video !== document.pictureInPictureElement) {
         this.video.requestPictureInPicture && await this.video.requestPictureInPicture();
       }
@@ -95,12 +99,48 @@ export class VideoPictureInPicture {
   }
 
   onEnterPictureInPicture = (event: any) => {
-    // console.log('> Video entered Picture-in-Picture');
-
     this.pipWindow = event.pictureInPictureWindow as HTMLPipWindow;
+    this.pipFixer.onEnterPipMode();
   }
 
   onLeavePictureInPicture = (event: any) => {
-    // console.log('> Video left Picture-in-Picture');
+    this.pipFixer.onLeavelPipMode();
+  }
+}
+
+
+class PictureInPictureFixer {
+  stateChangeCounter: number;
+  lastStateChange: Date;
+  INTERVAL_TO_FIX_STATE_CHANGE: number = 1000;
+  constructor(private video: HTMLVideoElement) {}
+
+  onEnterPipMode() {
+    this.stateChangeCounter = 0;
+    this.lastStateChange = new Date;
+    this.onLeavelPipMode();
+
+    this.video.addEventListener('play', this.stateChange);
+    this.video.addEventListener('pause', this.stateChange);
+  }
+  onLeavelPipMode() {
+    this.video.removeEventListener('play', this.stateChange);
+    this.video.removeEventListener('pause', this.stateChange);
+  }
+
+
+  private stateChange = (e) => {
+    this.stateChangeCounter++;
+
+    // @ts-ignore
+    const intervalTime = new Date - this.lastStateChange;
+    if (intervalTime > this.INTERVAL_TO_FIX_STATE_CHANGE) {
+      this.stateChangeCounter = 1;
+    }
+    else if (this.stateChangeCounter % 2 == 0) {
+      this.video.dispatchEvent(new Event("mousedown"));
+    }
+
+    this.lastStateChange = new Date;
   }
 }

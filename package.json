@@ -1,7 +1,6 @@
 {
-  "name": "darkreader",
-  "version": "4.9.16",
-  "description": "Dark theme for every website",
+  "name": "udemy-plus",
+  "version": "0.0.1",
   "scripts": {
     "api": "node tasks/build.js --api",
     "benchmark-server": "node tests/benchmark-server/index.js",
@@ -17,21 +16,6 @@
     "test:inject:debug": "node --inspect-brk ./node_modules/jest/bin/jest --config=tests/inject/jest.config.js --runInBand --no-cache --watch",
     "test:utils": "jest --config=tests/utils/jest.config.js",
     "test:utils:debug": "node --inspect-brk ./node_modules/jest/bin/jest --config=tests/utils/jest.config.js --runInBand --no-cache --watch"
-  },
-  "main": "darkreader.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alexanderby/darkreader.git"
-  },
-  "author": "Alexander Shutau <darkreaderapp@gmail.com> (https://darkreader.org/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/alexanderby/darkreader/issues"
-  },
-  "homepage": "https://darkreader.org/",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/darkreader"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "14.0.0",
@@ -60,5 +44,6 @@
     "typescript": "3.9.7",
     "ws": "7.3.1",
     "yazl": "2.5.1"
-  }
+  },
+  "dependencies": {}
 }
