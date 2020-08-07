@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Udemy Plus",
-    "version": "0.1",
+    "version": "0.0.1",
     "author": "Sagynbek Kenzhebaev",
     "description": "__MSG_extension_description__",
     "default_locale": "en",

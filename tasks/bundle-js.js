@@ -10,6 +10,8 @@ const { getDestDir } = require('./paths');
 const reload = require('./reload');
 const { PORT } = reload;
 const { createTask } = require('./task');
+const obfuscatorPlugin = require('rollup-plugin-javascript-obfuscator');
+
 
 async function copyToFF({ cwdPath, debug }) {
     const destPath = `${getDestDir({ debug })}/${cwdPath}`;
@@ -106,12 +108,16 @@ async function bundleJS(/** @type {JSEntry} */entry, { debug, watch }) {
                 },
                 clean: debug ? false : true,
                 cacheRoot: debug ? `${fs.realpathSync(os.tmpdir())}/darkreader_typescript_cache` : null,
+
             }),
             rollupPluginReplace({
                 '__DEBUG__': debug ? 'true' : 'false',
                 '__PORT__': watch ? String(PORT) : '-1',
                 '__WATCH__': watch ? 'true' : 'false',
             }),
+            obfuscatorPlugin({
+                compact: debug ? false : true
+            })
         ].filter((x) => x)
     });
     entry.watchFiles = bundle.watchFiles;

@@ -28,7 +28,8 @@ export class VideoPictureInPicture {
   }
 
   removedVideoPlayer(video: HTMLVideoElement) {
-    this.pipButton?.remove();
+    if(!this.pipButton){return;}
+    this.pipButton.remove();
   }
 
   setupPip() {

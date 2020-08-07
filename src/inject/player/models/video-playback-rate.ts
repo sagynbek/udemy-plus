@@ -1,12 +1,11 @@
-
+const ALL_RATES = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3];
 export class VideoPlaybackRate {
-  allRates: Array<number>;
+  allRates: Array<number> = ALL_RATES;
   videoPlayer?: HTMLVideoElement;
   activeVideoPlaybackRate: number = 1;
   useVideoPlaybackRateAsDefault: boolean = false; // Used when extension first loaded, and we want to use users' settings
 
   constructor() {
-    this.allRates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3];
     this.fetchUserPreferences();
   }
 
