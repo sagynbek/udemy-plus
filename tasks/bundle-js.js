@@ -10,7 +10,7 @@ const { getDestDir } = require('./paths');
 const reload = require('./reload');
 const { PORT } = reload;
 const { createTask } = require('./task');
-const obfuscatorPlugin = require('rollup-plugin-javascript-obfuscator');
+const UglifyJS = require("uglify-js");
 
 
 async function copyToFF({ cwdPath, debug }) {
@@ -21,6 +21,17 @@ async function copyToFF({ cwdPath, debug }) {
 
 function replace(str, find, replace) {
     return str.split(find).join(replace);
+}
+
+function uglify(code) {
+    console.log(code)
+    const result = UglifyJS.minify(code);
+    // if(result.error){
+    //     throw new result.error;
+    // }
+    console.log(result.error); // runtime error, or `undefined` if no error
+    // console.log(result.code);  // minified output: function add(n,d){return n+d}
+    return result.code;
 }
 
 function patchFirefoxJS(/** @type {string} */code) {
@@ -58,6 +69,10 @@ const jsEntries = [
         reloadType: reload.FULL,
         async postBuild({ debug }) {
             await copyToFF({ cwdPath: this.dest, debug });
+            // const destPath = `${getDestDir({ debug })}/${this.dest}`;
+            // const ffDestPath = `${getDestDir({ debug, firefox: false })}/${this.dest}`;
+            // const code = await fs.readFile(destPath, 'utf8');
+            // await fs.outputFile(ffDestPath, uglify(code));
         },
         watchFiles: null,
     },
@@ -114,9 +129,6 @@ async function bundleJS(/** @type {JSEntry} */entry, { debug, watch }) {
                 '__DEBUG__': debug ? 'true' : 'false',
                 '__PORT__': watch ? String(PORT) : '-1',
                 '__WATCH__': watch ? 'true' : 'false',
-            }),
-            obfuscatorPlugin({
-                compact: debug ? false : true
             })
         ].filter((x) => x)
     });
