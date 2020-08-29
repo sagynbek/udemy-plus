@@ -20,15 +20,36 @@ export class VideoPictureInPicture {
     return this._pipFixer;
   }
 
-  foundVideoPlayer(video: HTMLVideoElement) {
+  async requestPipOpen() {
+    this.video.requestPictureInPicture && await this.video.requestPictureInPicture();
+  }
+
+  async requestPipExit() {
+    document.exitPictureInPicture && await document.exitPictureInPicture();
+  }
+
+  async foundVideoPlayer(video: HTMLVideoElement) {
     this._video = video;
     this._pipFixer = new PictureInPictureFixer(video);
 
     this.setupPip();
+    await this.handleNewVideo();
+  }
+
+  /** When video changes, close active PIP, and open new one */
+  handleNewVideo = async () => {
+    if (this.pipWindow) {
+      await this.requestPipExit()
+        .catch(err => { });
+      this.video.onloadedmetadata = async () => {
+        await this.requestPipOpen()
+          .catch(err => { });
+      }
+    }
   }
 
   removedVideoPlayer(video: HTMLVideoElement) {
-    if(!this.pipButton){return;}
+    if (!this.pipButton) { return; }
     this.pipButton.remove();
   }
 
@@ -86,12 +107,11 @@ export class VideoPictureInPicture {
     this.pipButton.disabled = true;
     try {
       if (this.video !== document.pictureInPictureElement) {
-        this.video.requestPictureInPicture && await this.video.requestPictureInPicture();
+        this.requestPipOpen();
       }
       else {
-        document.exitPictureInPicture && await document.exitPictureInPicture();
+        this.requestPipExit();
       }
-
     } catch (error) {
       console.log(`UdemyPlus Picture in Picture error! ${error}`);
     } finally {
@@ -106,6 +126,7 @@ export class VideoPictureInPicture {
 
   onLeavePictureInPicture = (event: any) => {
     this.pipFixer.onLeavelPipMode();
+    this.pipWindow = null;
   }
 }
 
@@ -114,7 +135,7 @@ class PictureInPictureFixer {
   stateChangeCounter: number;
   lastStateChange: Date;
   INTERVAL_TO_FIX_STATE_CHANGE: number = 1000;
-  constructor(private video: HTMLVideoElement) {}
+  constructor(private video: HTMLVideoElement) { }
 
   onEnterPipMode() {
     this.stateChangeCounter = 0;
