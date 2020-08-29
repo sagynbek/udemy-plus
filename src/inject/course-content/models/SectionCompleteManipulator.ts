@@ -22,7 +22,7 @@ export class SectionCompleteManipulator {
   }
 
   static getActionText(allCompleted: boolean) {
-    return getLocalMessage(allCompleted ? 'mark_all_incompleted' : 'mark_all_completed');
+    return getLocalMessage(allCompleted ? 'mark_all_uncompleted' : 'mark_all_completed');
   }
 
   static addIntoSectionPanel(sectionPanel: HTMLElement) {

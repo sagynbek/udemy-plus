@@ -10,8 +10,6 @@
     },
     "permissions": [
         "storage",
-        "tabs",
-        "theme",
-        "<all_urls>"
+        "https://*.udemy.com/*"
     ]
 }
