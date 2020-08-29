@@ -31,7 +31,6 @@ export class VideoPictureInPicture {
   async foundVideoPlayer(video: HTMLVideoElement) {
     this._video = video;
     this._pipFixer = new PictureInPictureFixer(video);
-
     this.setupPip();
     await this.handleNewVideo();
   }
@@ -40,10 +39,14 @@ export class VideoPictureInPicture {
   handleNewVideo = async () => {
     if (this.pipWindow) {
       await this.requestPipExit()
-        .catch(err => { });
+        .catch(err => {
+          console.log("Could not close PiP", err);
+        });
       this.video.onloadedmetadata = async () => {
         await this.requestPipOpen()
-          .catch(err => { });
+          .catch(err => {
+            console.log("Could not open PiP", err);
+          });
       }
     }
   }
