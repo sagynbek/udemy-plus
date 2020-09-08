@@ -29,10 +29,15 @@ export class VideoPictureInPicture {
   }
 
   async foundVideoPlayer(video: HTMLVideoElement) {
-    this._video = video;
-    this._pipFixer = new PictureInPictureFixer(video);
-    this.setupPip();
-    await this.handleNewVideo();
+    try{
+      this._video = video;
+      this._pipFixer = new PictureInPictureFixer(video);
+      this.setupPip();
+      await this.handleNewVideo();
+    }
+    catch(err){
+      console.warn("Error occured while configuring PIP");
+    }
   }
 
   /** When video changes, close active PIP, and open new one */

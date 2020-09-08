@@ -49,12 +49,16 @@ export class SectionCompleteManipulator {
   }
 
   static foundLessonsSectionUl(ul: HTMLUListElement) {
-    const curriculumSectionContainer = ul.parentNode;
-    if (!curriculumSectionContainer) { return; }
+    try {
+      const curriculumSectionContainer = ul.parentNode;
+      if (!curriculumSectionContainer) { return; }
 
-    const sectionHeading = curriculumSectionContainer.querySelector('div[data-purpose="section-heading"]');
-    if (sectionHeading && sectionHeading.parentElement) {
-      SectionCompleteManipulator.addIntoSectionPanel(sectionHeading.parentElement);
+      const sectionHeading = curriculumSectionContainer.querySelector('div[data-purpose="section-heading"]');
+      if (sectionHeading && sectionHeading.parentElement) {
+        SectionCompleteManipulator.addIntoSectionPanel(sectionHeading.parentElement);
+      }
+    } catch (err) {
+      console.warn("Error occured while setting up SectionCompleteToggler")
     }
   }
 }

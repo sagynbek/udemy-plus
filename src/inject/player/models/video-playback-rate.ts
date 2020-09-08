@@ -20,13 +20,17 @@ export class VideoPlaybackRate {
   }
 
   foundVideoPlayer(videoPlayer: HTMLVideoElement) {
-    this.videoPlayer = videoPlayer;
-    this.videoPlayer.addEventListener("ratechange", (e) => {
-      this.updatePlaybackRate(); // if playing video, changes playRate, I need to change it back to my settings
-    })
+    try {
+      this.videoPlayer = videoPlayer;
+      this.videoPlayer.addEventListener("ratechange", (e) => {
+        this.updatePlaybackRate(); // if playing video, changes playRate, I need to change it back to my settings
+      })
 
-    this.updatePlaybackRate();
-    this.addNewPlaybackRates();
+      this.updatePlaybackRate();
+      this.addNewPlaybackRates();
+    } catch (err) {
+      console.warn("Error occured on PlaybackRate modification")
+    }
   }
 
   addNewPlaybackRates() {
@@ -34,13 +38,13 @@ export class VideoPlaybackRate {
     if (!playbackRateMenuUl) { return; }
 
     const allLiRates = playbackRateMenuUl.querySelectorAll("li");
-    const rateLiTemplate = allLiRates[0].cloneNode(true) as HTMLElement;
+    let rateLiTemplate = allLiRates[0].cloneNode(true) as HTMLElement;
     playbackRateMenuUl.innerHTML = ""; // clears all existing items
 
     this.allRates.forEach(rate => {
       const itemToAdd = (rateLiTemplate.cloneNode(true) as HTMLElement);
 
-      (itemToAdd.querySelector("a") as HTMLAnchorElement).addEventListener('click', this.handleChangeVideoPlaybackRate);
+      (itemToAdd.querySelector("label") as HTMLLabelElement).addEventListener('click', this.handleChangeVideoPlaybackRate);
       (itemToAdd.querySelector("span") as HTMLSpanElement).innerText = rate.toString();
       playbackRateMenuUl.appendChild(itemToAdd);
     });
