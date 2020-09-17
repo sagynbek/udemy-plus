@@ -12,6 +12,8 @@ function getLessFiles({ debug }) {
         'src/ui/popup/style.less': `${dir}/ui/popup/style.css`,
         // 'src/ui/stylesheet-editor/style.less': `${dir}/ui/stylesheet-editor/style.css`,
         'src/ui/page.less': `${dir}/ui/page.css`,
+        'src/ui/themes/dark.less': `${dir}/ui/themes/dark.css`,
+        'src/ui/themes/default.less': `${dir}/ui/themes/default.css`,
     };
 }
 

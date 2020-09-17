@@ -1,10 +1,3 @@
-// import {
-//   enable as enableDarkMode,
-//   disable as disableDarkMode,
-//   auto as followSystemColorScheme,
-// } from 'darkreader';
-
-
 type TTheme = | "dark" | "default";
 
 // Helpers
@@ -17,14 +10,14 @@ function applyTheme(theme: TTheme) {
   //   disableDarkMode();
   //   followSystemColorScheme(false);
   // }
-  // const darkThemePath = chrome.runtime.getURL(`style/${theme}-theme.css`);
-  // const darkThemeStyleEl = document.createElement("link");
-  // darkThemeStyleEl.setAttribute('rel', 'stylesheet');
-  // darkThemeStyleEl.setAttribute('type', 'text/css');
-  // darkThemeStyleEl.setAttribute('id', `udemy-plus-${theme}`);
-  // darkThemeStyleEl.setAttribute('href', darkThemePath);
+  const darkThemePath = chrome.runtime.getURL(`ui/themes/${theme}.css`);
+  const darkThemeStyleEl = document.createElement("link");
+  darkThemeStyleEl.setAttribute('rel', 'stylesheet');
+  darkThemeStyleEl.setAttribute('type', 'text/css');
+  darkThemeStyleEl.setAttribute('id', `udemy-plus-${theme}`);
+  darkThemeStyleEl.setAttribute('href', darkThemePath);
 
-  // document.head.appendChild(darkThemeStyleEl)
+  document.head.appendChild(darkThemeStyleEl)
 }
 function discardTheme(theme: TTheme) {
   const targetElement = document.getElementById(`udemy-plus-${theme}`);

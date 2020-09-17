@@ -33,8 +33,8 @@
         }
     ],
     "web_accessible_resources": [
-        "ui/styles/dark-theme.css",
-        "ui/styles/default-theme.css",
+        "ui/themes/dark.css",
+        "ui/themes/default.css",
         "icons/pip-icon.png"
     ],
     "permissions": [
