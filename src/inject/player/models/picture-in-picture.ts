@@ -61,7 +61,7 @@ export class VideoPictureInPicture {
     this.pipButton.remove();
   }
 
-  setupPip() {
+  setupPip = () => {
     if ('pictureInPictureEnabled' in document) {
       this.video.addEventListener('loadedmetadata', this.setPipButton);
       this.video.addEventListener('emptied', this.setPipButton);
@@ -73,7 +73,7 @@ export class VideoPictureInPicture {
     }
   }
 
-  addPipButton() {
+  addPipButton = () => {
     const theatreModeButton = document.querySelector("button[data-purpose='theatre-mode-toggle-button']") as HTMLButtonElement;
     if (!theatreModeButton) {
       this.retryTheatreModeTimeout = setTimeout(this.addPipButton, 1000);
