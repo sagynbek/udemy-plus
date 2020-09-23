@@ -1,4 +1,6 @@
+const TIME_TO_WAIT_FOR_BUTTON_AFTER_VIDEO_IN_MS = 700;
 const ALL_RATES = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3];
+
 export class VideoPlaybackRate {
   allRates: Array<number> = ALL_RATES;
   videoPlayer?: HTMLVideoElement;
@@ -21,13 +23,15 @@ export class VideoPlaybackRate {
 
   foundVideoPlayer(videoPlayer: HTMLVideoElement) {
     try {
-      this.videoPlayer = videoPlayer;
-      this.videoPlayer.addEventListener("ratechange", (e) => {
-        this.updatePlaybackRate(); // if playing video, changes playRate, I need to change it back to my settings
-      })
+      setTimeout(() => {
+        this.videoPlayer = videoPlayer;
+        this.videoPlayer.addEventListener("ratechange", (e) => {
+          this.updatePlaybackRate(); // if playing video, changes playRate, I need to change it back to my settings
+        })
 
-      this.updatePlaybackRate();
-      this.addNewPlaybackRates();
+        this.updatePlaybackRate();
+        this.addNewPlaybackRates();
+      }, TIME_TO_WAIT_FOR_BUTTON_AFTER_VIDEO_IN_MS)
     } catch (err) {
       console.warn("Error occured on PlaybackRate modification")
     }
