@@ -3,5 +3,5 @@ import { themeRunner } from './theme/site-theme';
 
 
 runMutationObserver();
-// themeRunner();
+themeRunner();
 chrome.runtime.sendMessage({"message": "activate_icon"});
