@@ -48,7 +48,7 @@ export class VideoPlaybackRate {
     this.allRates.forEach(rate => {
       const itemToAdd = (rateLiTemplate.cloneNode(true) as HTMLElement);
 
-      (itemToAdd.querySelector("label") as HTMLLabelElement).addEventListener('click', this.handleChangeVideoPlaybackRate);
+      itemToAdd.addEventListener('click', this.handleChangeVideoPlaybackRate);
       (itemToAdd.querySelector("span") as HTMLSpanElement).innerText = rate.toString();
       playbackRateMenuUl.appendChild(itemToAdd);
     });
