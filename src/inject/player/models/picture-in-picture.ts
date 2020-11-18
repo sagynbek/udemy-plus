@@ -8,7 +8,7 @@ export class VideoPictureInPicture {
   _video?: HTMLVideoElement;
   _pipFixer?: PictureInPictureFixer;
   pipWindow?: HTMLPipWindow;
-  retryTheatreModeTimeout: any;
+  retryTheatreModeTimeout?: any;
   pipButton?: HTMLButtonElement;
 
   get video(): HTMLVideoElement {
@@ -29,13 +29,13 @@ export class VideoPictureInPicture {
   }
 
   async foundVideoPlayer(video: HTMLVideoElement) {
-    try{
+    try {
       this._video = video;
       this._pipFixer = new PictureInPictureFixer(video);
       this.setupPip();
       await this.handleNewVideo();
     }
-    catch(err){
+    catch (err) {
       console.warn("Error occured while configuring PIP");
     }
   }
@@ -47,13 +47,21 @@ export class VideoPictureInPicture {
         .catch(err => {
           console.log("Could not close PiP", err);
         });
+
       this.video.onloadedmetadata = async () => {
         await this.requestPipOpen()
           .catch(err => {
-            console.log("Could not open PiP", err);
+            // If failed to open pip, then listen for user trusted gesture and request again
+            console.log("Could not open PiP");
+            document.addEventListener("click", this.requestPipOpenOnUserGesture);
           });
       }
     }
+  }
+
+  requestPipOpenOnUserGesture = () => {
+    document.removeEventListener('click', this.requestPipOpenOnUserGesture);
+    this.requestPipOpen();
   }
 
   removedVideoPlayer(video: HTMLVideoElement) {
