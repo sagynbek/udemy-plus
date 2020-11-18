@@ -52,6 +52,7 @@ export class SectionCompleteManipulator {
     try {
       const curriculumSectionContainer = ul.parentNode;
       if (!curriculumSectionContainer) { return; }
+      if (!SectionCompleteManipulator.isCurriculumSectionContainerValid(curriculumSectionContainer)) { return; }
 
       const sectionHeading = curriculumSectionContainer.querySelector('div[data-purpose="section-heading"]');
       if (sectionHeading && sectionHeading.parentElement) {
@@ -60,5 +61,12 @@ export class SectionCompleteManipulator {
     } catch (err) {
       console.warn("Error occured while setting up SectionCompleteToggler")
     }
+  }
+
+  static isCurriculumSectionContainerValid(curriculumSectionContainer: Node & ParentNode) {
+    if (!curriculumSectionContainer.querySelector('div[data-purpose="up-toggle-section-completed"]')) {
+      return true;
+    }
+    return false;
   }
 }
