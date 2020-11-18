@@ -101,6 +101,7 @@ export class VideoPictureInPicture {
     const pipButtonSpan = this.pipButton.querySelector("span");
     if (pipButtonSpan) {
       pipButtonSpan.classList.remove("udi-horizontal-expand");
+      pipButtonSpan.classList.remove("udi-horizontal-collapse");
       pipButtonSpan.style.background = `url("${chrome.runtime.getURL(`icons/pip-icon.png`)}") center center no-repeat`;
     }
 
