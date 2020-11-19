@@ -10,8 +10,12 @@ export class SectionCompleteManipulator {
   static analyze(sectionPanel: HTMLElement) {
     const ulElement: HTMLUListElement | null = sectionPanel.querySelector("ul");
 
-    // @ts-ignore
-    const lessons: Array<HTMLInputElement> = [...ulElement.querySelectorAll("input[type='checkbox']")];
+
+    const allCheckboxes = ulElement.querySelectorAll("input[type='checkbox']");
+    const lessons: Array<HTMLInputElement> = [];
+    for (let it = 0; it < allCheckboxes.length; it++) {
+      lessons.push(allCheckboxes[it] as HTMLInputElement);
+    }
     const completedCount = lessons.filter((input) => input.checked).length;
 
     return {
@@ -31,7 +35,6 @@ export class SectionCompleteManipulator {
 
     const toggleText = SectionCompleteManipulator.getActionText(allCompleted);
     sectionPanel.children[0].insertAdjacentHTML("afterend", `<div class='up-toggle-section-completed' data-purpose='up-toggle-section-completed'>${toggleText}</div>`);
-    // @ts-ignore
     sectionPanel.querySelector(`div[data-purpose='up-toggle-section-completed']`).addEventListener("click", this.onToggleCompleted);
   }
 

@@ -3,20 +3,20 @@ import { SectionCompleteManipulator } from "./models/SectionCompleteManipulator"
 const addedNodeListeners = [addedContentSectionListener];
 const removedNodeListeners = [removedContentSectionListener];
 
-function emitAddedNode(addedNode: HTMLElement, mutation: MutationRecord) {
+function emitAddedNode(addedNode: Node, mutation: MutationRecord) {
   addedNodeListeners.forEach(listener => listener(addedNode, mutation));
 }
-function emitRemovedNode(removedNode: HTMLElement, mutation: MutationRecord) {
+function emitRemovedNode(removedNode: Node, mutation: MutationRecord) {
   removedNodeListeners.forEach(listener => listener(removedNode, mutation));
 }
 
 
 
 // #region Toggle section completed
-function addedContentSectionListener(addedNode: HTMLElement, mutation: MutationRecord) {
+function addedContentSectionListener(addedNode: Node, mutation: MutationRecord) {
   // section list is opened
   if (
-    addedNode.localName === "ul"
+    addedNode.nodeName === "UL"
     && addedNode.parentNode
     && addedNode.parentNode.querySelector('div[data-purpose="section-heading"]')
   ) {
@@ -24,10 +24,10 @@ function addedContentSectionListener(addedNode: HTMLElement, mutation: MutationR
   }
 
   if (
-    addedNode.localName === "div" // section panel, containing list of sections
-    && addedNode.querySelector('div[data-purpose="curriculum-section-container"] div[data-purpose*="section-panel"]>ul')
+    addedNode.nodeName === "DIV" // section panel, containing list of sections
+    && (addedNode as HTMLDivElement).querySelector('div[data-purpose="curriculum-section-container"] div[data-purpose*="section-panel"]>ul')
   ) {
-    const allOpenSectionUls = addedNode.querySelectorAll('div[data-purpose="curriculum-section-container"] div[data-purpose*="section-panel"]>ul');
+    const allOpenSectionUls = (addedNode as HTMLDivElement).querySelectorAll('div[data-purpose="curriculum-section-container"] div[data-purpose*="section-panel"]>ul');
     allOpenSectionUls.forEach(ul => {
       SectionCompleteManipulator.foundLessonsSectionUl(ul as HTMLUListElement);
     });
@@ -37,9 +37,9 @@ function addedContentSectionListener(addedNode: HTMLElement, mutation: MutationR
 /**
  * Removes toggle if section closes
 */
-function removedContentSectionListener(removedNode: HTMLElement, mutation: MutationRecord) {
+function removedContentSectionListener(removedNode: Node, mutation: MutationRecord) {
   // section list is opened
-  if (removedNode.localName === "ul"
+  if (removedNode.nodeName === "UL"
     && mutation.target
     && (mutation.target as HTMLElement).querySelector('div[data-purpose="up-toggle-section-completed"]')
   ) {

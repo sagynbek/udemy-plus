@@ -39,7 +39,7 @@ function discardTheme(theme: TTheme) {
 
 const run = () => {
   // Event listeners
-  chrome.storage.onChanged.addListener(function (changes, areaName) {
+  chrome.storage.onChanged.addListener(function (changes) {
     // Listen for theme change
     if (changes.theme.oldValue !== changes.theme.newValue) {
       discardTheme(changes.theme.oldValue);

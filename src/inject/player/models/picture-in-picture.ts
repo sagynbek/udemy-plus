@@ -1,6 +1,6 @@
 
 interface HTMLPipWindow extends HTMLVideoElement {
-  requestPictureInPicture: Function,
+  requestPictureInPicture: () => void,
 }
 
 
@@ -171,8 +171,7 @@ class PictureInPictureFixer {
   private stateChange = (e) => {
     this.stateChangeCounter++;
 
-    // @ts-ignore
-    const intervalTime = new Date - this.lastStateChange;
+    const intervalTime = new Date().getTime() - this.lastStateChange.getTime();
     if (intervalTime > this.INTERVAL_TO_FIX_STATE_CHANGE) {
       this.stateChangeCounter = 1;
     }

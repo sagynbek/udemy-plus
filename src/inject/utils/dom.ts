@@ -9,19 +9,17 @@ export const runMutationObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
 
   // Callback function to execute when mutations are observed
-  const callback: MutationCallback = function (mutationsList: MutationRecord[], observer: MutationObserver) {
+  const callback: MutationCallback = function (mutationsList: MutationRecord[]) {
     // Use traditional 'for loops' for IE 11
     for (const mutation of mutationsList) {
       const { addedNodes, removedNodes } = mutation;
 
       if (mutation.type === "childList") {
         addedNodes.forEach(addedNode => {
-          // @ts-ignore
           emitAddedNode(addedNode, mutation);
         });
 
         removedNodes.forEach(removedNode => {
-          // @ts-ignore
           emitRemovedNode(removedNode, mutation);
         });
       }
@@ -44,11 +42,11 @@ export const runMutationObserver = () => {
 };
 
 
-function emitAddedNode(addedNode: HTMLElement, mutation: MutationRecord) {
+function emitAddedNode(addedNode: Node, mutation: MutationRecord) {
   emitAddedCourseContent(addedNode, mutation);
   emitAddedVideoPlayer(addedNode, mutation);
 }
-function emitRemovedNode(removedNode: HTMLElement, mutation: MutationRecord) {
+function emitRemovedNode(removedNode: Node, mutation: MutationRecord) {
   emitRemovedCourseContent(removedNode, mutation);
   emitRemovedVideoPlayer(removedNode, mutation);
 }
