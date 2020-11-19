@@ -3,10 +3,10 @@
 build
 debug
 build.zip
+build-firefox.zip
 build-firefox
 debug-firefox
 build-firefox.xpi
-darkreader.js
 
 # Node.js modules
 #-----------------------------------

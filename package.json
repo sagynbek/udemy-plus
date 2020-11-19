@@ -2,7 +2,7 @@
   "name": "udemy-plus",
   "version": "0.0.1",
   "scripts": {
-    "code-style": "eslint --fix \"src/**/*.ts\" \"tasks/**/*.js\" \"index.d.ts\"",
+    "code-style": "eslint --fix \"src/**/*.ts\" \"tasks/**/*.js\" ",
     "debug": "node tasks/build.js --debug",
     "release": "node tasks/build.js --release"
   },
