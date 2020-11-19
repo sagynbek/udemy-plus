@@ -1,5 +1,5 @@
 
-//@ts-ignore
+// @ts-ignore
 chrome.extension.onMessage.addListener(
   function (request, sender, sendResponse) {
     if (request.message === "activate_icon") {

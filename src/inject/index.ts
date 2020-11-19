@@ -1,4 +1,4 @@
-import { runMutationObserver } from './utils/dom';
+import { runMutationObserver } from "./utils/dom";
 // import { themeRunner } from './theme/site-theme';
 
 

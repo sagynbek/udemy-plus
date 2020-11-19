@@ -2,13 +2,13 @@ import { getLocalMessage } from "utils/locales";
 
 
 export class SectionCompleteManipulator {
-  /** 
+  /**
    * SectionPanel
    *    SectionHeading: (Section 14: NATS streaming server)
    *    ulElement: (list of course, 261, 267, 268, 269....)
   */
   static analyze(sectionPanel: HTMLElement) {
-    const ulElement: HTMLUListElement | null = sectionPanel.querySelector('ul');
+    const ulElement: HTMLUListElement | null = sectionPanel.querySelector("ul");
 
     // @ts-ignore
     const lessons: Array<HTMLInputElement> = [...ulElement.querySelectorAll("input[type='checkbox']")];
@@ -18,11 +18,11 @@ export class SectionCompleteManipulator {
       lessons,
       total: lessons.length,
       allCompleted: completedCount === lessons.length,
-    }
+    };
   }
 
   static getActionText(allCompleted: boolean) {
-    return getLocalMessage(allCompleted ? 'mark_all_uncompleted' : 'mark_all_completed');
+    return getLocalMessage(allCompleted ? "mark_all_uncompleted" : "mark_all_completed");
   }
 
   static addIntoSectionPanel(sectionPanel: HTMLElement) {
@@ -30,9 +30,9 @@ export class SectionCompleteManipulator {
 
 
     const toggleText = SectionCompleteManipulator.getActionText(allCompleted);
-    sectionPanel.children[0].insertAdjacentHTML('afterend', `<div class='up-toggle-section-completed' data-purpose='up-toggle-section-completed'>${toggleText}</div>`)
+    sectionPanel.children[0].insertAdjacentHTML("afterend", `<div class='up-toggle-section-completed' data-purpose='up-toggle-section-completed'>${toggleText}</div>`);
     // @ts-ignore
-    sectionPanel.querySelector(`div[data-purpose='up-toggle-section-completed']`).addEventListener('click', this.onToggleCompleted);
+    sectionPanel.querySelector(`div[data-purpose='up-toggle-section-completed']`).addEventListener("click", this.onToggleCompleted);
   }
 
   static onToggleCompleted(e: any) {
@@ -59,7 +59,7 @@ export class SectionCompleteManipulator {
         SectionCompleteManipulator.addIntoSectionPanel(sectionHeading.parentElement);
       }
     } catch (err) {
-      console.warn("Error occured while setting up SectionCompleteToggler")
+      console.warn("Error occured while setting up SectionCompleteToggler");
     }
   }
 

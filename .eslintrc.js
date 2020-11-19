@@ -9,7 +9,7 @@ module.exports = {
             before: false,
             after: true,
         }],
-        'indent': ['error', 4, {
+        'indent': ['error', 2, {
             'SwitchCase': 1,
         }],
         'jsx-quotes': ['error', 'prefer-double'],
@@ -17,7 +17,7 @@ module.exports = {
             after: true,
             before: true,
         }],
-        'object-curly-spacing': ['error', 'never'],
+        'object-curly-spacing': ['error', 'always'],
         'no-multi-spaces': 'error',
         'no-trailing-spaces': 'error',
         'no-whitespace-before-property': 'error',
@@ -29,8 +29,8 @@ module.exports = {
         }],
         'space-in-parens': ['error', 'never'],
         'space-infix-ops': 'error',
-        'spaced-comment': ['error', 'always', {exceptions: ['-']}],
-        'quotes': ['error', 'single', {
+        'spaced-comment': ['error', 'always', { exceptions: ['-'] }],
+        'quotes': ['error', 'double', {
             allowTemplateLiterals: true,
             avoidEscape: true,
         }],

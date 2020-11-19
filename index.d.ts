@@ -129,6 +129,6 @@ declare namespace DarkReader {
     }
 }
 
-declare module 'darkreader' {
+declare module "darkreader" {
     export = DarkReader;
 }

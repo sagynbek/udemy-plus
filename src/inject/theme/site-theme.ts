@@ -12,12 +12,12 @@ function applyTheme(theme: TTheme) {
   // }
   const darkThemePath = chrome.runtime.getURL(`ui/themes/${theme}.css`);
   const darkThemeStyleEl = document.createElement("link");
-  darkThemeStyleEl.setAttribute('rel', 'stylesheet');
-  darkThemeStyleEl.setAttribute('type', 'text/css');
-  darkThemeStyleEl.setAttribute('id', `udemy-plus-${theme}`);
-  darkThemeStyleEl.setAttribute('href', darkThemePath);
+  darkThemeStyleEl.setAttribute("rel", "stylesheet");
+  darkThemeStyleEl.setAttribute("type", "text/css");
+  darkThemeStyleEl.setAttribute("id", `udemy-plus-${theme}`);
+  darkThemeStyleEl.setAttribute("href", darkThemePath);
 
-  document.head.appendChild(darkThemeStyleEl)
+  document.head.appendChild(darkThemeStyleEl);
 }
 function discardTheme(theme: TTheme) {
   const targetElement = document.getElementById(`udemy-plus-${theme}`);
@@ -43,18 +43,18 @@ const run = () => {
     // Listen for theme change
     if (changes.theme.oldValue !== changes.theme.newValue) {
       discardTheme(changes.theme.oldValue);
-      applyTheme(changes.theme.newValue)
+      applyTheme(changes.theme.newValue);
     }
   });
 
 
 
-  chrome.storage.sync.get(['theme'], (result) => {
+  chrome.storage.sync.get(["theme"], (result) => {
     const activeTheme = result.theme || "dark";
     applyTheme(activeTheme);
   });
-}
+};
 
 // run();
 
-export { run as themeRunner }
+export { run as themeRunner };

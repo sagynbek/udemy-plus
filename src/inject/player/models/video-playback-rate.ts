@@ -4,15 +4,15 @@ const ALL_RATES = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3];
 export class VideoPlaybackRate {
   allRates: Array<number> = ALL_RATES;
   videoPlayer?: HTMLVideoElement;
-  activeVideoPlaybackRate: number = 1;
-  useVideoPlaybackRateAsDefault: boolean = false; // Used when extension first loaded, and we want to use users' settings
+  activeVideoPlaybackRate = 1;
+  useVideoPlaybackRateAsDefault = false; // Used when extension first loaded, and we want to use users' settings
 
   constructor() {
     this.fetchUserPreferences();
   }
 
   fetchUserPreferences() {
-    chrome.storage.sync.get(['videoPlaybackRate'], (result) => {
+    chrome.storage.sync.get(["videoPlaybackRate"], (result) => {
       if (!result.videoPlaybackRate) {
         this.useVideoPlaybackRateAsDefault = true;
         return;
@@ -27,13 +27,13 @@ export class VideoPlaybackRate {
         this.videoPlayer = videoPlayer;
         this.videoPlayer.addEventListener("ratechange", (e) => {
           this.updatePlaybackRate(); // if playing video, changes playRate, I need to change it back to my settings
-        })
+        });
 
         this.updatePlaybackRate();
         this.addNewPlaybackRates();
-      }, TIME_TO_WAIT_FOR_BUTTON_AFTER_VIDEO_IN_MS)
+      }, TIME_TO_WAIT_FOR_BUTTON_AFTER_VIDEO_IN_MS);
     } catch (err) {
-      console.warn("Error occured on PlaybackRate modification")
+      console.warn("Error occured on PlaybackRate modification");
     }
   }
 
@@ -42,13 +42,13 @@ export class VideoPlaybackRate {
     if (!playbackRateMenuUl) { return; }
 
     const allLiRates = playbackRateMenuUl.querySelectorAll("li");
-    let rateLiTemplate = allLiRates[0].cloneNode(true) as HTMLElement;
+    const rateLiTemplate = allLiRates[0].cloneNode(true) as HTMLElement;
     playbackRateMenuUl.innerHTML = ""; // clears all existing items
 
     this.allRates.forEach(rate => {
       const itemToAdd = (rateLiTemplate.cloneNode(true) as HTMLElement);
 
-      itemToAdd.addEventListener('click', this.handleChangeVideoPlaybackRate);
+      itemToAdd.addEventListener("click", this.handleChangeVideoPlaybackRate);
       (itemToAdd.querySelector("span") as HTMLSpanElement).innerText = rate.toString();
       playbackRateMenuUl.appendChild(itemToAdd);
     });
@@ -61,11 +61,11 @@ export class VideoPlaybackRate {
 
     allLiRates.forEach((liRate) => {
       const rate = parseFloat((liRate as HTMLElement).innerText);
-      liRate.classList.remove('active');
+      liRate.classList.remove("active");
       if (rate === this.activeVideoPlaybackRate) {
-        liRate.classList.add('active');
+        liRate.classList.add("active");
       }
-    })
+    });
   }
 
   handleChangeVideoPlaybackRate = (e: any) => {

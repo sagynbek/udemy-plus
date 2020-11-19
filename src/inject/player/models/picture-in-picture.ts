@@ -55,12 +55,12 @@ export class VideoPictureInPicture {
             console.log("Could not open PiP");
             document.addEventListener("click", this.requestPipOpenOnUserGesture);
           });
-      }
+      };
     }
   }
 
   requestPipOpenOnUserGesture = () => {
-    document.removeEventListener('click', this.requestPipOpenOnUserGesture);
+    document.removeEventListener("click", this.requestPipOpenOnUserGesture);
     this.requestPipOpen();
   }
 
@@ -70,12 +70,12 @@ export class VideoPictureInPicture {
   }
 
   setupPip = () => {
-    if ('pictureInPictureEnabled' in document) {
-      this.video.addEventListener('loadedmetadata', this.setPipButton);
-      this.video.addEventListener('emptied', this.setPipButton);
+    if ("pictureInPictureEnabled" in document) {
+      this.video.addEventListener("loadedmetadata", this.setPipButton);
+      this.video.addEventListener("emptied", this.setPipButton);
 
-      this.video.addEventListener('enterpictureinpicture', this.onEnterPictureInPicture);
-      this.video.addEventListener('leavepictureinpicture', this.onLeavePictureInPicture);
+      this.video.addEventListener("enterpictureinpicture", this.onEnterPictureInPicture);
+      this.video.addEventListener("leavepictureinpicture", this.onLeavePictureInPicture);
 
       this.addPipButton();
     }
@@ -151,7 +151,7 @@ export class VideoPictureInPicture {
 class PictureInPictureFixer {
   stateChangeCounter: number;
   lastStateChange: Date;
-  INTERVAL_TO_FIX_STATE_CHANGE: number = 1000;
+  INTERVAL_TO_FIX_STATE_CHANGE = 1000;
   constructor(private video: HTMLVideoElement) { }
 
   onEnterPipMode() {
@@ -159,12 +159,12 @@ class PictureInPictureFixer {
     this.lastStateChange = new Date;
     this.onLeavelPipMode();
 
-    this.video.addEventListener('play', this.stateChange);
-    this.video.addEventListener('pause', this.stateChange);
+    this.video.addEventListener("play", this.stateChange);
+    this.video.addEventListener("pause", this.stateChange);
   }
   onLeavelPipMode() {
-    this.video.removeEventListener('play', this.stateChange);
-    this.video.removeEventListener('pause', this.stateChange);
+    this.video.removeEventListener("play", this.stateChange);
+    this.video.removeEventListener("pause", this.stateChange);
   }
 
 

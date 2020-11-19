@@ -12,7 +12,7 @@ function emitRemovedNode(removedNode: HTMLElement, mutation: MutationRecord) {
 
 
 
-//#region Toggle section completed
+// #region Toggle section completed
 function addedContentSectionListener(addedNode: HTMLElement, mutation: MutationRecord) {
   // section list is opened
   if (
@@ -30,11 +30,11 @@ function addedContentSectionListener(addedNode: HTMLElement, mutation: MutationR
     const allOpenSectionUls = addedNode.querySelectorAll('div[data-purpose="curriculum-section-container"] div[data-purpose*="section-panel"]>ul');
     allOpenSectionUls.forEach(ul => {
       SectionCompleteManipulator.foundLessonsSectionUl(ul as HTMLUListElement);
-    })
+    });
   }
 }
 
-/** 
+/**
  * Removes toggle if section closes
 */
 function removedContentSectionListener(removedNode: HTMLElement, mutation: MutationRecord) {
@@ -48,11 +48,11 @@ function removedContentSectionListener(removedNode: HTMLElement, mutation: Mutat
     sectionHeading && sectionHeading.remove();
   }
 }
-//#endregion
+// #endregion
 
 
 
 export {
   emitAddedNode as emitAddedCourseContent,
   emitRemovedNode as emitRemovedCourseContent
-}
+};
