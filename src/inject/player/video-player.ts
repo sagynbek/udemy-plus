@@ -1,5 +1,9 @@
-import { VideoPlaybackRate } from "./models/video-playback-rate";
+import { VideoPlaybackRate } from "./VideoPlaybackRate";
 import { VideoPictureInPicture } from "./models/picture-in-picture";
+
+export const initVideoPlayer = () => {
+  new VideoPlaybackRate();
+}
 
 declare global {
   interface HTMLVideoElement {
@@ -14,7 +18,7 @@ declare global {
 }
 
 
-const videoPlaybackRate = new VideoPlaybackRate();
+// const videoPlaybackRate = new VideoPlaybackRate();
 const videoPictureInPicture = new VideoPictureInPicture();
 
 const addedNodeListeners = [addedCourseVideoPlayer];
@@ -30,7 +34,7 @@ function emitRemovedNode(removedNode: Node, mutation: MutationRecord) {
 
 function addedCourseVideoPlayer(addedNode: Node, mutation: MutationRecord) {
   if (addedNode.nodeName === "VIDEO") {
-    videoPlaybackRate.foundVideoPlayer(addedNode as HTMLVideoElement);
+    // videoPlaybackRate.foundVideoPlayer(addedNode as HTMLVideoElement);
     videoPictureInPicture.foundVideoPlayer(addedNode as HTMLVideoElement);
   }
 }
