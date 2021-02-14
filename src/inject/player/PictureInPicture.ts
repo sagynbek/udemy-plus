@@ -52,7 +52,6 @@ interface IConfig {
 class PipWindow {
   private pipButton?: HTMLButtonElement;
   private videoPlayer: HTMLVideoElement;
-  private retryTheatreModeTimeout?: any;
   public state: IState = "Waiting";
 
   constructor(videoEl: HTMLVideoElement, config: IConfig) {
@@ -67,8 +66,8 @@ class PipWindow {
   }
 
   private init = (config: IConfig) => {
-    this.videoPlayer.addEventListener("loadedmetadata", this.setPipButton);
-    this.videoPlayer.addEventListener("emptied", this.setPipButton);
+    this.videoPlayer.addEventListener("loadedmetadata", this.updatePipButtonState);
+    this.videoPlayer.addEventListener("emptied", this.updatePipButtonState);
 
 
     this.videoPlayer.addEventListener("enterpictureinpicture", () => {
@@ -114,39 +113,44 @@ class PipWindow {
     }
   }
 
-  private setPipButton = () => {
+  private updatePipButtonState = () => {
     if (!this.pipButton) { return; } // whenever pipButton will be added, this function will be called
 
     this.pipButton.disabled = !!(this.videoPlayer.readyState === 0 || !document.pictureInPictureEnabled || this.videoPlayer.disablePictureInPicture);
   }
 
   private addPipButton = () => {
-    const theatreModeButton = document.querySelector("button[data-purpose='theatre-mode-toggle-button']") as HTMLButtonElement;
-    if (!theatreModeButton) {
-      this.retryTheatreModeTimeout = setTimeout(this.addPipButton, 1000);
+    const playPauseButton = document.querySelector("button[data-purpose='play-button']") || document.querySelector("button[data-purpose='pause-button']") as HTMLButtonElement;
+    console.log({ playPauseButton })
+
+    if (!playPauseButton) {
+      setTimeout(this.addPipButton, 1000);
       return;
     }
-    clearTimeout(this.retryTheatreModeTimeout);
+    // already added
+    if (document.querySelector("button[data-purpose='pip-button']")) { return; }
 
-    this.pipButton = theatreModeButton.cloneNode(true) as HTMLButtonElement;
+    this.pipButton = playPauseButton.cloneNode(true) as HTMLButtonElement;
     this.pipButton.addEventListener("click", this.togglePip);
 
     this.pipButton.classList.add("up-pip-button");
 
+    this.pipButton.setAttribute('data-purpose', 'pip-button');
     this.pipButton.setAttribute("aria-label", "");
     this.pipButton.setAttribute("aria-labelledby", "");
     this.pipButton.setAttribute("aria-describedby", "");
 
     const pipButtonSpan = this.pipButton.querySelector("span");
     if (pipButtonSpan) {
-      pipButtonSpan.classList.remove("udi-horizontal-expand");
-      pipButtonSpan.classList.remove("udi-horizontal-collapse");
+      pipButtonSpan.classList.remove("udi-exp-play");
+      pipButtonSpan.classList.remove("udi-exp-pause");
       pipButtonSpan.style.background = `url("${chrome.runtime.getURL(`icons/pip-icon.png`)}") center center no-repeat`;
     }
 
-    theatreModeButton.insertAdjacentElement("afterend", this.pipButton);
+    const videoControls = document.querySelector("div[data-purpose='video-controls']") as HTMLDivElement;
+    videoControls.appendChild(this.pipButton);
 
-    this.setPipButton();
+    this.updatePipButtonState();
   }
 
 
