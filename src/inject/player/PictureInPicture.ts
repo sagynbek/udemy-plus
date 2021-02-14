@@ -121,7 +121,6 @@ class PipWindow {
 
   private addPipButton = () => {
     const playPauseButton = document.querySelector("button[data-purpose='play-button']") || document.querySelector("button[data-purpose='pause-button']") as HTMLButtonElement;
-    console.log({ playPauseButton })
 
     if (!playPauseButton) {
       setTimeout(this.addPipButton, 1000);

@@ -6,12 +6,12 @@ Browser extension for Udemy.com
 * Better video play 😎
 * Mark course sections completed 😏
 
-## Tasks for 1.4 release
--) Add configuration page
--) Toggle completed button content update dynamically on videos completed
+## Tasks for 1.0.4 release
+* Add configuration page
+* Toggle completed button content update dynamically on videos completed
 
-## Tasks for 1.5 release
--) Add custom speed from configuration
+## Tasks for 1.0.5 release
+* Add custom speed from configuration
 
 
 
