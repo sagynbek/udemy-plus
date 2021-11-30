@@ -29,6 +29,13 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
     this.preferredVideoPlaybackRate = parseFloat(rate);
   }
 
+  private parseRate = (rate: string) => {
+    return parseFloat(rate.split("x")[0]);
+  }
+  private convertRate = (rate: number) => {
+    return rate + "x";
+  }
+
   private validate = (element: T) => {
     return this.permitted
       && element.nodeName === "VIDEO"
@@ -68,7 +75,7 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
   }
 
   addNewPlaybackRates = (element: T) => {
-    const playbackRateMenuUl = element.querySelector("div[data-purpose='playback-rate-menu'] ul[role='menu']") as HTMLUListElement;
+    const playbackRateMenuUl = element.querySelector("ul[data-purpose='playback-rate-menu']") as HTMLUListElement;
     if (!playbackRateMenuUl) { return; }
 
     const allLiRates = playbackRateMenuUl.querySelectorAll("li");
@@ -79,7 +86,7 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
       const itemToAdd = (rateLiTemplate.cloneNode(true) as HTMLElement);
 
       itemToAdd.addEventListener("click", this.handleChangeVideoPlaybackRate);
-      (itemToAdd.querySelector("span") as HTMLSpanElement).innerText = rate.toString();
+      (itemToAdd.querySelector("span") as HTMLSpanElement).innerText = this.convertRate(rate);
       playbackRateMenuUl.appendChild(itemToAdd);
     });
 
@@ -87,7 +94,7 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
   }
 
   handleChangeVideoPlaybackRate = (e: any) => {
-    const newRate = parseFloat(e.target.innerText);
+    const newRate = this.parseRate(e.target.innerText);
 
     if (isNaN(newRate)) {
       console.error("Change video playback rate", e.target.innerText, "not a number");
@@ -101,13 +108,13 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
   }
 
   markPreferredRateActive = () => {
-    const allLiRates = document.querySelectorAll("div[data-purpose='playback-rate-menu'] ul[role='menu'] li");
+    const allRates = document.querySelectorAll("ul[data-purpose='playback-rate-menu'] li button");
 
-    allLiRates.forEach((liRate) => {
-      const rate = parseFloat((liRate as HTMLElement).innerText);
-      liRate.classList.remove("active");
+    allRates.forEach((el) => {
+      const rate = this.parseRate((el as HTMLElement).innerText);
+      el.setAttribute("aria-checked", "false");
       if (rate === this.preferredVideoPlaybackRate) {
-        liRate.classList.add("active");
+        el.setAttribute("aria-checked", "true");
       }
     });
   }
