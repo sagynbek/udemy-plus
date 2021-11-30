@@ -1,5 +1,6 @@
 import { VideoPlaybackRate } from "./VideoPlaybackRate";
 import { PictureInPicture } from './PictureInPicture';
+import { VideoNavigator } from "./VideoNavigator";
 
 
 declare global {
@@ -17,4 +18,5 @@ declare global {
 export const initVideoPlayer = () => {
   new VideoPlaybackRate();
   new PictureInPicture();
+  new VideoNavigator();
 }
