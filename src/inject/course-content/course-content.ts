@@ -1,5 +1,5 @@
-import { SectionCompleteToggler } from './SectionCompleteToggler';
+import { SectionCompleteToggler } from "./SectionCompleteToggler";
 
 export const initCourseContent = () => {
   new SectionCompleteToggler();
-}
+};

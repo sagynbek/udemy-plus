@@ -38,7 +38,7 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
 
   private validate = (element: T) => {
     return this.permitted
-      && element.nodeName === "VIDEO"
+      && element.nodeName === "VIDEO";
   }
   private action = (videoEl: T) => {
     try {
@@ -54,7 +54,7 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
   private validatePlaybackRateBtn = (element: T) => {
     return this.permitted
       && element.nodeName === "DIV"
-      && !!element.querySelector("button[data-purpose='playback-rate-button']")
+      && !!element.querySelector("button[data-purpose='playback-rate-button']");
   }
   private actionOnPlaybackRateBtn = (element: T) => {
     this.updatePlaybackRate();

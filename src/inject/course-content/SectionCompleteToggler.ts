@@ -29,7 +29,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
     const sections = element.querySelectorAll("div[data-purpose^='section-panel-'] div[role='region']");
     sections.forEach(section => {
       this.attemptToAddTogglerToSection(section as HTMLDivElement);
-    })
+    });
   }
 
   private attemptToAddTogglerToSection = (section: HTMLDivElement) => {
@@ -45,7 +45,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
   }
 
   private getSectionToggler = (element: HTMLDivElement) => {
-    return element.parentNode.querySelector('div[data-purpose="up-toggle-section-completed"]')
+    return element.parentNode.querySelector('div[data-purpose="up-toggle-section-completed"]');
   }
   /**
    * SectionPanel

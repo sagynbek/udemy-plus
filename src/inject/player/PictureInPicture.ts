@@ -24,7 +24,7 @@ export class PictureInPicture<T extends HTMLVideoElement> extends BaseModel<T> {
 
   private validate = (element: T) => {
     return this.permitted
-      && element.nodeName === "VIDEO"
+      && element.nodeName === "VIDEO";
   }
 
   private action = async (videoEl: T) => {
@@ -134,7 +134,7 @@ class PipWindow {
 
     this.pipButton.classList.add("up-pip-button");
 
-    this.pipButton.setAttribute('data-purpose', 'pip-button');
+    this.pipButton.setAttribute("data-purpose", "pip-button");
     this.pipButton.setAttribute("aria-label", "");
     this.pipButton.setAttribute("aria-labelledby", "");
     this.pipButton.setAttribute("aria-describedby", "");

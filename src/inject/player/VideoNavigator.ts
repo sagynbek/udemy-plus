@@ -12,7 +12,7 @@ export class VideoNavigator<T extends HTMLDivElement> extends BaseModel<T> {
 
   private async init() {
     if (this.permitted) {
-      document.addEventListener('keydown', this.checkOnKeyDown);
+      document.addEventListener("keydown", this.checkOnKeyDown);
     }
   }
 

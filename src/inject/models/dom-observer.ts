@@ -1,5 +1,5 @@
 import { ObserverWrapper } from "inject/utils/observer";
-import { logWarn } from '../utils/log';
+import { logWarn } from "../utils/log";
 
 
 type ISubsribableActions = | "add" | "remove" | "attributes";
@@ -31,18 +31,18 @@ export class DomObserver {
       add: [],
       remove: [],
       attributes: []
-    }
+    };
 
     this.observerWrapper = new ObserverWrapper
-      (
-        document.documentElement || document.body,
-        this.onObserverCallback,
-        {
-          attributes: true,
-          childList: true,
-          subtree: true,
-        }
-      );
+    (
+      document.documentElement || document.body,
+      this.onObserverCallback,
+      {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      }
+    );
   }
 
   subscribe<P extends Node>(validate: (node: P) => boolean, callback: (node: P) => void, action: ISubsribableActions) {
@@ -68,7 +68,7 @@ export class DomObserver {
       try {
         validate(target) && callback(target);
       } catch (err) {
-        logWarn(err)
+        logWarn(err);
       }
     });
   }

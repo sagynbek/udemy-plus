@@ -16,14 +16,14 @@ export class UserPreference {
   }
 
   private onStorageChange = (changes: { [key: string]: chrome.storage.StorageChange; }) => {
-    for (let key in changes) {
+    for (const key in changes) {
       const storageChange = changes[key];
 
       this.observables.forEach(({ preference, onChange }) => {
         if (preference === key) {
           onChange(storageChange.newValue);
         }
-      })
+      });
     }
   }
 

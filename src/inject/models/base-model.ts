@@ -17,7 +17,7 @@ export abstract class BaseModel<T extends Node>{
   protected async setPreference<P>(preference: string, value: P) {
     return await this.userPreference.set<P>(preference, value);
   }
-  /** 
+  /**
    * Subscribes and calls onChange on subscription
   */
   protected async subscribeToPreference<P>(preference: string, defaultValue: P, onChange: (changedValue: P) => void) {

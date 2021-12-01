@@ -1,5 +1,5 @@
 import { VideoPlaybackRate } from "./VideoPlaybackRate";
-import { PictureInPicture } from './PictureInPicture';
+import { PictureInPicture } from "./PictureInPicture";
 import { VideoNavigator } from "./VideoNavigator";
 
 
@@ -19,4 +19,4 @@ export const initVideoPlayer = () => {
   new VideoPlaybackRate();
   new PictureInPicture();
   new VideoNavigator();
-}
+};
