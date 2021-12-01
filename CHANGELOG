@@ -5,4 +5,7 @@
   - fixed sometimes not showing up
 - Video playback rate
   - sync improved with playback rate button
-  
+
+## Release 1.4
+- Video navigator added
+- Playback rate integrated with Udemy updates
