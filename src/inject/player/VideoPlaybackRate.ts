@@ -65,13 +65,27 @@ export class VideoPlaybackRate<T extends HTMLVideoElement> extends BaseModel<T> 
     const buttonRateIndicator = document.querySelector("button[data-purpose='playback-rate-button']") as HTMLElement;
     if (!buttonRateIndicator) { return; }
 
-    if (buttonRateIndicator.innerText) {
-      buttonRateIndicator.innerText = this.preferredVideoPlaybackRate.toString();
-    }
+    this.updatePlaybackButtonContent(buttonRateIndicator);
+
     if (this.videoPlayer && this.videoPlayer.playbackRate !== this.preferredVideoPlaybackRate) {
       this.videoPlayer.playbackRate = this.preferredVideoPlaybackRate;
     }
     this.addPlaybackRateToListIfNotExists(this.preferredVideoPlaybackRate);
+  }
+
+  private updatePlaybackButtonContent = (buttonRateIndicator: HTMLElement) => {
+    const newInnerText = this.preferredVideoPlaybackRate.toString() + "x";
+    let nestedButton = buttonRateIndicator;
+    while (nestedButton.children.length > 0) {
+      nestedButton = nestedButton.children[0] as HTMLElement;
+    }
+
+    if (nestedButton.innerText) {
+      nestedButton.innerText = newInnerText;
+    }
+    else if (buttonRateIndicator.innerText) {
+      buttonRateIndicator.innerText = newInnerText;
+    }
   }
 
   addNewPlaybackRates = (element: T) => {
