@@ -14,7 +14,6 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
   private async init() {
     await this.subscribeToPreference(SECTION_COMPLETE_TOGGLE_ENABLED.key, SECTION_COMPLETE_TOGGLE_ENABLED.default, this.setPermition);
     this.onDomAdd(this.validateCurriculumContainer, this.actionOnCurriculumContainer);
-    this.onDomAdd(this.validateSection, this.actionOnSection)
   }
 
   private setPermition = (permission) => {
@@ -23,29 +22,17 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
 
   private validateCurriculumContainer = (element: T) => {
     return this.permitted
-      && element.nodeName === "DIV"
-      && element.getAttribute('data-purpose') === "curriculum-section-container"
+      && element.querySelector("div[data-purpose='curriculum-section-container']") ? true : false;
   }
 
   private actionOnCurriculumContainer = (element: T) => {
-    const openUlSections = element.querySelectorAll('div[aria-expanded="true"]>ul');
-    openUlSections.forEach(ulSection => {
-      this.attemptToAddTogglerToSection(ulSection as HTMLUListElement);
+    const sections = element.querySelectorAll("div[data-purpose^='section-panel-'] div[role='region']");
+    sections.forEach(section => {
+      this.attemptToAddTogglerToSection(section as HTMLDivElement);
     })
   }
 
-  private validateSection = (element: T) => {
-    return this.permitted
-      && element.nodeName === "UL"
-      && element.parentNode
-      && !!element.parentNode.querySelector('div[data-purpose="section-heading"]')
-  }
-
-  private actionOnSection = (element: T) => {
-    this.attemptToAddTogglerToSection(element as HTMLUListElement);
-  }
-
-  private attemptToAddTogglerToSection = (section: HTMLUListElement) => {
+  private attemptToAddTogglerToSection = (section: HTMLDivElement) => {
     // Already added
     if (this.getSectionToggler(section)) { return; }
 
@@ -57,7 +44,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
     this.updateSectionTogglerContent(section);
   }
 
-  private getSectionToggler = (element: HTMLUListElement) => {
+  private getSectionToggler = (element: HTMLDivElement) => {
     return element.parentNode.querySelector('div[data-purpose="up-toggle-section-completed"]')
   }
   /**
@@ -65,7 +52,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
    *    SectionHeading: (Section 14: NATS streaming server)
    *    ulElement: (list of course, 261, 267, 268, 269....)
   */
-  private analyze(section: HTMLUListElement) {
+  private analyze(section: HTMLDivElement) {
     const allCheckboxes = section.querySelectorAll("input[type='checkbox']");
     const lessons: Array<HTMLInputElement> = [];
     for (let it = 0; it < allCheckboxes.length; it++) {
@@ -81,7 +68,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
   }
 
   private onToggleCompleted = (e: any) => {
-    const section = e.target.parentNode
+    const section = e.target.parentNode;
     const { lessons, allCompleted } = this.analyze(section);
     const newStatus = !allCompleted;
 
@@ -94,7 +81,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
     this.updateSectionTogglerContent(section);
   }
 
-  private updateSectionTogglerContent = (section: HTMLUListElement) => {
+  private updateSectionTogglerContent = (section: HTMLDivElement) => {
     const { allCompleted } = this.analyze(section);
     const togglerElement = this.getSectionToggler(section) as HTMLDivElement;
     const toggleText = getLocalMessage(allCompleted ? "mark_all_uncompleted" : "mark_all_completed");
