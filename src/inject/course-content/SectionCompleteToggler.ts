@@ -22,6 +22,7 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
 
   private validateCurriculumContainer = (element: T) => {
     return this.permitted
+      && element.nodeName === "DIV"
       && element.querySelector("div[data-purpose='curriculum-section-container']") ? true : false;
   }
 
