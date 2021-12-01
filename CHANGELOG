@@ -1,4 +1,4 @@
-## Release 1.3
+## Release 1.0.3
 
 - Code refactored
 - Picture in Picture
@@ -7,12 +7,12 @@
 - Video playback rate
   - sync improved with playback rate button
 
-## Release 1.4
+## Release 1.0.4
 
 - Video navigator added
 - Playback rate integrated with Udemy updates
 
-## Release 1.5
+## Release 1.0.5
 
 - Playback rate button UI fixed
 - Section toggler integrated with Udemy updates
