@@ -139,12 +139,10 @@ class PipWindow {
     this.pipButton.setAttribute("aria-labelledby", "");
     this.pipButton.setAttribute("aria-describedby", "");
 
-    const pipButtonSpan = this.pipButton.querySelector("span");
-    if (pipButtonSpan) {
-      pipButtonSpan.classList.remove("udi-exp-play");
-      pipButtonSpan.classList.remove("udi-exp-pause");
-      pipButtonSpan.style.background = `url("${chrome.runtime.getURL(`icons/pip-icon.png`)}") center center no-repeat`;
-    }
+    this.pipButton.innerHTML = "";
+    const pipSpan = document.createElement("span");
+    this.pipButton.appendChild(pipSpan);
+    pipSpan.style.background = `url("${chrome.runtime.getURL(`icons/pip-icon.png`)}") center center no-repeat`;
 
     const videoControls = document.querySelector("div[data-purpose='video-controls']") as HTMLDivElement;
     videoControls.appendChild(this.pipButton);
