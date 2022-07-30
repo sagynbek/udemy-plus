@@ -1,11 +1,11 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "__MSG_extension_name__",
   "version": "1.0.6",
   "author": "Sagynbek Kenzhebaev",
   "description": "__MSG_extension_description__",
   "default_locale": "en",
-  "page_action": {
+  "action": {
     "default_title": "Udemy Plus",
     "default_popup": "ui/popup/index.html"
   },
@@ -13,10 +13,6 @@
     "128": "icons/icon128.png",
     "48": "icons/icon48.png",
     "16": "icons/icon16.png"
-  },
-  "background": {
-    "persistent": true,
-    "page": "background/index.html"
   },
   "content_scripts": [
     {
@@ -27,9 +23,14 @@
     }
   ],
   "web_accessible_resources": [
-    "ui/themes/dark.css",
-    "ui/themes/default.css",
-    "icons/pip-icon.png"
+    {
+      "resources": [
+        "ui/themes/dark.css",
+        "ui/themes/default.css",
+        "icons/pip-icon.png"
+      ],
+      "matches": ["https://*.udemy.com/*"]
+    }
   ],
-  "permissions": ["storage", "https://*.udemy.com/*"]
+  "permissions": ["storage"]
 }
