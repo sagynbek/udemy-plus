@@ -27,9 +27,9 @@ export class SectionCompleteToggler<T extends HTMLUListElement | HTMLDivElement>
   }
 
   private actionOnCurriculumContainer = (element: T) => {
-    const sections = element.querySelectorAll("div[data-purpose^='section-panel-'] div[role='region']");
-    sections.forEach(section => {
-      this.attemptToAddTogglerToSection(section as HTMLDivElement);
+    const sections = element.querySelectorAll("div[data-purpose^='section-panel-']");
+    sections.forEach((section:HTMLDivElement) => {
+      this.attemptToAddTogglerToSection(section.querySelector("div[role='group']"));
     });
   }
 
